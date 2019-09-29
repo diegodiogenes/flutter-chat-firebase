@@ -51,6 +51,18 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         body: Column(
           children: <Widget>[
+            Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    ChatMessage(),
+                    ChatMessage(),
+                    ChatMessage()
+                  ],
+                )
+            ),
+            Divider(
+              height: 1.0,
+            ),
             Container(
               decoration: BoxDecoration(
                 color: Theme
@@ -91,8 +103,9 @@ class _TextComposerState extends State<TextComposer> {
             ),
             Expanded(
                 child: TextField(
-                  decoration: InputDecoration.collapsed(hintText: "Digite sua mensagem"),
-                  onChanged: (text){
+                  decoration: InputDecoration.collapsed(
+                      hintText: "Digite sua mensagem"),
+                  onChanged: (text) {
                     setState(() {
                       _isComposing = text.length > 0;
                     });
@@ -103,7 +116,7 @@ class _TextComposerState extends State<TextComposer> {
               margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: _isComposing ? (){} : null
+                  onPressed: _isComposing ? () {} : null
               ),
             )
           ],
@@ -112,5 +125,44 @@ class _TextComposerState extends State<TextComposer> {
     );
   }
 }
+
+class ChatMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      child: Row(
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "https://avatarfiles.alphacoders.com/427/42731.jpg"),
+            ),
+          ),
+          Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Diego",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subhead,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 5.0),
+                    child: Text("Teste"),
+                  )
+                ],
+              )
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 
