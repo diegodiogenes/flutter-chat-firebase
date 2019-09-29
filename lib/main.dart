@@ -72,6 +72,9 @@ class TextComposer extends StatefulWidget {
 }
 
 class _TextComposerState extends State<TextComposer> {
+
+  bool _isComposing = false;
+
   @override
   Widget build(BuildContext context) {
     return IconTheme(
@@ -89,7 +92,19 @@ class _TextComposerState extends State<TextComposer> {
             Expanded(
                 child: TextField(
                   decoration: InputDecoration.collapsed(hintText: "Digite sua mensagem"),
+                  onChanged: (text){
+                    setState(() {
+                      _isComposing = text.length > 0;
+                    });
+                  },
                 )
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: _isComposing ? (){} : null
+              ),
             )
           ],
         ),
