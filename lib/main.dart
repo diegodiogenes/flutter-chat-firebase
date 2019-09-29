@@ -90,12 +90,26 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: <Widget>[
             Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    ChatMessage(),
-                    ChatMessage(),
-                    ChatMessage()
-                  ],
+                child: StreamBuilder(
+                    stream: Firestore.instance.collection("messages").snapshots(),
+                    builder: (context, snapshot){
+                      switch(snapshot.connectionState){
+                        case ConnectionState.none:
+                        case ConnectionState.waiting:
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        default:
+                          return ListView.builder(
+                            reverse: true,
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index){
+                              List r = snapshot.data.documents.reversed.toList();
+                              return ChatMessage(r[index].data);
+                            }
+                          );
+                      }
+                    }
                 )
             ),
             Divider(
@@ -181,6 +195,11 @@ class _TextComposerState extends State<TextComposer> {
 }
 
 class ChatMessage extends StatelessWidget {
+  
+  final Map<String, dynamic> data;
+  
+  ChatMessage(this.data);
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -191,7 +210,7 @@ class ChatMessage extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                  "https://avatarfiles.alphacoders.com/427/42731.jpg"),
+                  data["senderPhotoUrl"]),
             ),
           ),
           Expanded(
@@ -199,7 +218,7 @@ class ChatMessage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Diego",
+                    data["senderName"],
                     style: Theme
                         .of(context)
                         .textTheme
@@ -207,7 +226,8 @@ class ChatMessage extends StatelessWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 5.0),
-                    child: Text("Teste"),
+                    child: data["imgUrl"] != null ?
+                    Image.network(data["imgUrl"], width: 250.0,) : Text(data["text"]),
                   )
                 ],
               )
