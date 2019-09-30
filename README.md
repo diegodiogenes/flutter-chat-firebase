@@ -1,16 +1,14 @@
-# bate_papo
+# flutter-chat-firebase
 
-A new Flutter application.
+Desenvolvimento de um chat mobile desenvolvido em Flutter utilizando firebase.
 
-## Getting Started
+## Funcionalidades
 
-This project is a starting point for a Flutter application.
+Consite em uma aplicação simples com as funcionalidades básicas de um chat:
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Visualizar as mensagens do chat, mas para enviar necessita realizar login
+* Login via Conta google
+* A mensagem é enviada para todos que estão com o chat aberto
+* As mensagens são armazenadas no storage do Firebase
+* Pode ser enviada uma foto tirada da câmera
